@@ -1,0 +1,63 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="sampleApp">
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>Sample S3 Gallery App</title>
+
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		ul.a {list-style-type: circle;}
+		html 					{ overflow-y:scroll; }
+		body 					{ padding-top:50px; }
+		/*#todo-list 				{ margin-bottom:30px; }
+		#todo-form 	 			{ margin-bottom:50px; }*/
+	</style>
+
+	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+
+	<script src="js/controllers/GalleryCtrl.js"></script>
+	<script src="js/controllers/GalleryFilter.js"></script>
+	<script src="js/services/GalleryService.js"></script>
+	<!-- <script src="js/controllers/GeekCtrl.js"></script> -->
+	<!-- <script src="js/services/GeekService.js"></script> -->
+	<!-- <script src="js/appRoutes.js"></script> -->
+	<script src="js/app.js"></script>
+
+</head>
+<!-- SET THE CONTROLLER -->
+<body ng-controller="GalleryController">
+	<div>
+		<div id="todo-list" class="row">
+			<div class="col-sm-4 col-sm-offset-4">
+				<div id="imageNames" class="row">
+				<input type="text" ng-model="letter" placeholder="Filter Images With Rating =">
+					<div ng-repeat="name in (dataset | filterEqualTo:letter)">
+						<div ng-if=name.Key.charAt(name.Key.length-1)!='/' style="padding: 20px 70px 20px 0px;">
+							<div>
+								<b> {{name.Key}} </b>
+							</div>
+							<img src={{url+name.Key}} height="100" width="100">
+							<form ng-submit="myRating(name.etag)">
+							  <input type="text" ng-model="text" name="text" ng-init="text=name.rating">
+							  <input type="submit" value="RateImage">
+							</form>
+						</div>
+					</div>
+					<p ng-hide="(dataset | filterEqualTo:letter).length">Nothing here!</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
+
